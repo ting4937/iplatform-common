@@ -9,13 +9,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Description:
- *
- * @author: Cloud
- * Date: 2018-08-01
- * Time: 10:19
- */
+
 public class ObjTransformUtils {
     private final static Logger logger = LoggerFactory.getLogger(ObjTransformUtils.class);
 

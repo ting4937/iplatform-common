@@ -31,11 +31,6 @@ public class TreeUtils {
     /**
      * 组装树，返回扁平树，树下节点已挂载
      *
-     * @param flatArray
-     * @param idName
-     * @param parentIdName
-     * @param displayName
-     * @return
      */
     private static List<TreeBean> handleTree(JSONArray flatArray, String idName, String parentIdName, String displayName) {
         List<TreeBean> tree = new ArrayList<>();

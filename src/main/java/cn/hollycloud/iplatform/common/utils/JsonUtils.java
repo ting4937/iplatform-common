@@ -30,9 +30,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @create: 2018-04-24 17:20
- **/
 public class JsonUtils {
     private static final ObjectMapper mapper = new ObjectMapper();
     private static final ObjectMapper typeMapper = new ObjectMapper();

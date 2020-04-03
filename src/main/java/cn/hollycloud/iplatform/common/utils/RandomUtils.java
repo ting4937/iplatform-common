@@ -28,8 +28,6 @@ public class RandomUtils {
     /**
      * 返回最大为[0-endExclusive)的随机数
      *使用ThreadLocalRandom在多线程下性能更高
-     * @param endExclusive
-     * @return
      */
     public static int nextInt(int endExclusive) {
         ThreadLocalRandom random = ThreadLocalRandom.current();

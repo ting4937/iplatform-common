@@ -12,12 +12,7 @@ public class FileUtils {
         return UUID.randomUUID().toString() + "." + originalName.replace(".", "-").split("-")[originalName.replace(".", "-").split("-").length - 1];
     }
 
-    /**
-     * 获取文件后缀名，不包含点
-     *
-     * @param name
-     * @return
-     */
+    //get extention,exclude .
     public static String getExtention(String name) {
         if (StringUtils.isEmpty(name)) {
             return "";
@@ -29,23 +24,12 @@ public class FileUtils {
         return name.substring(index + 1);
     }
 
-    /**
-     * 根据文件路径获取文件名
-     *
-     * @param path
-     * @return
-     */
+
     public static String getNameFromPath(String path) {
         String[] paths = path.split("/");
         return paths[paths.length - 1];
     }
 
-    /**
-     * 获取文件名，不包含后缀
-     *
-     * @param fullname
-     * @return
-     */
     public static String getFileName(String fullname) {
         if (StringUtils.isEmpty(fullname)) {
             return "";
@@ -69,12 +53,6 @@ public class FileUtils {
         return humanReadableByteCount(bytes, false);
     }
 
-    /**
-     * 格式化目录，把\\或\转成/,并在最后加上/
-     *
-     * @param dir
-     * @return
-     */
     public static String formatDir(String dir) {
         if (StringUtils.isEmpty(dir)) {
             return dir;

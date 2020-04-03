@@ -83,8 +83,6 @@ public class SwaggerUtils {
     /**
      * 获取某包下（包括该包的所有子包）所有类
      *
-     * @param packageName 包名
-     * @return 类的完整名称
      */
     public static List<String> getClassName(String packageName) {
         return getClassName(packageName, true);
@@ -93,9 +91,6 @@ public class SwaggerUtils {
     /**
      * 获取某包下所有类
      *
-     * @param packageName  包名
-     * @param childPackage 是否遍历子包
-     * @return 类的完整名称
      */
     public static List<String> getClassName(String packageName, boolean childPackage) {
         List<String> fileNames = null;
@@ -118,10 +113,6 @@ public class SwaggerUtils {
     /**
      * 从项目文件获取某包下所有类
      *
-     * @param filePath     文件路径
-     * @param className    类名集合
-     * @param childPackage 是否遍历子包
-     * @return 类的完整名称
      */
     private static List<String> getClassNameByFile(String filePath, List<String> className, boolean childPackage) {
         List<String> myClassName = new ArrayList<>();
@@ -149,9 +140,6 @@ public class SwaggerUtils {
     /**
      * 从jar获取某包下所有类
      *
-     * @param jarPath      jar文件路径
-     * @param childPackage 是否遍历子包
-     * @return 类的完整名称
      */
     private static List<String> getClassNameByJar(String jarPath, boolean childPackage) {
         List<String> myClassName = new ArrayList<>();
@@ -194,10 +182,6 @@ public class SwaggerUtils {
     /**
      * 从所有jar中搜索该包，并获取该包下所有类
      *
-     * @param urls         URL集合
-     * @param packagePath  包路径
-     * @param childPackage 是否遍历子包
-     * @return 类的完整名称
      */
     private static List<String> getClassNameByJars(URL[] urls, String packagePath, boolean childPackage) {
         List<String> myClassName = new ArrayList<>();

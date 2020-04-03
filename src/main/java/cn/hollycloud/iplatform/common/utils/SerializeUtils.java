@@ -11,8 +11,6 @@ public class SerializeUtils {
 
     /**
      * 反序列化
-     * @param bytes
-     * @return
      */
     public static Object deserialize(byte[] bytes) {
 
@@ -48,8 +46,6 @@ public class SerializeUtils {
 
     /**
      * 序列化
-     * @param object
-     * @return
      */
     public static byte[] serialize(Object object) {
 

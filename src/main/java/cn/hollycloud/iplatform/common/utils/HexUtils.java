@@ -21,12 +21,6 @@ public class HexUtils {
         return hex;
     }
 
-    /**
-     * Convert byte[] to hex string.这里我们可以将byte转换成int，然后利用Integer.toHexString(int)来转换成16进制字符串。
-     *
-     * @param src byte[] data
-     * @return hex string
-     */
     public static String bytesToHexString(byte[] src, boolean format) {
         StringBuilder stringBuilder = new StringBuilder("");
         if (src == null || src.length <= 0) {
@@ -50,12 +44,7 @@ public class HexUtils {
         return bytesToHexString(src, false);
     }
 
-    /**
-     * Convert hex string to byte[]
-     *
-     * @param hexString the hex string
-     * @return byte[]
-     */
+
     public static byte[] hexStringToBytes(String hexString) {
         if (hexString == null || hexString.equals("")) {
             return null;
@@ -71,12 +60,7 @@ public class HexUtils {
         return d;
     }
 
-    /**
-     * Convert char to byte
-     *
-     * @param c char
-     * @return byte
-     */
+
     private static byte charToByte(char c) {
         return (byte) "0123456789ABCDEF".indexOf(c);
     }

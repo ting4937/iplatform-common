@@ -100,12 +100,6 @@ public class HttpUtils {
         return doPost(url, null);
     }
 
-    /**
-     * 将map转换成url
-     *
-     * @param map
-     * @return
-     */
     private String createUrlParamsByMap(MultiValueMap<String, Object> map) {
         try {
             if (map == null) {
