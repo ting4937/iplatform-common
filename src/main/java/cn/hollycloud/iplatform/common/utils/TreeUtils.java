@@ -1,9 +1,15 @@
 package cn.hollycloud.iplatform.common.utils;
 
+import cn.hollycloud.iplatform.common.annotation.TreeId;
+import cn.hollycloud.iplatform.common.annotation.TreeName;
+import cn.hollycloud.iplatform.common.annotation.TreeParentId;
 import cn.hollycloud.iplatform.common.bean.TreeBean;
+import cn.hollycloud.iplatform.common.exception.ServiceFailException;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,9 +34,41 @@ public class TreeUtils {
         return tree;
     }
 
+    public static List<TreeBean> parseTree(List list, Class clazz) {
+        Field[] fields = clazz.getDeclaredFields();
+        String idName = null;
+        String parentIdName = null;
+        String displayName = null;
+        for (Field field : fields) {
+            if (field.getAnnotation(TreeId.class) != null) {
+                idName = field.getName();
+            } else if (field.getAnnotation(TreeName.class) != null) {
+                displayName = field.getName();
+            } else if (field.getAnnotation(TreeParentId.class) != null) {
+                parentIdName = field.getName();
+            }
+        }
+        if (StringUtils.isEmpty(idName)) {
+            throw new ServiceFailException("没有找到TreeId注解");
+        }
+        if (StringUtils.isEmpty(parentIdName)) {
+            throw new ServiceFailException("没有找到TreeParentId注解");
+        }
+        if (StringUtils.isEmpty(displayName)) {
+            throw new ServiceFailException("没有找到TreeName注解");
+        }
+        JSONArray jsonArray = JSONArray.parseArray(JsonUtils.serialize(list));
+        return parseTree(jsonArray, idName, parentIdName, displayName);
+    }
+
     /**
      * 组装树，返回扁平树，树下节点已挂载
      *
+     * @param flatArray
+     * @param idName
+     * @param parentIdName
+     * @param displayName
+     * @return
      */
     private static List<TreeBean> handleTree(JSONArray flatArray, String idName, String parentIdName, String displayName) {
         List<TreeBean> tree = new ArrayList<>();
