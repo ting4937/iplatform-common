@@ -103,6 +103,15 @@ public class HexUtils {
         buffer[pos] = (byte) (val & 0xFF);
     }
 
+    public static void writeIntLE(int val, byte[] buffer, int pos) {
+        buffer[pos + 3] = (byte) ((val >> 24) & 0xFF);
+        buffer[pos + 2] = (byte) ((val >> 16) & 0xFF);
+        //数据长度    高
+        buffer[pos + 1] = (byte) ((val >> 8) & 0xFF);
+        //数据长度    低
+        buffer[pos] = (byte) (val & 0xFF);
+    }
+
     public static void writeOneByte(int val, byte[] buffer, int pos) {
         buffer[pos] = (byte) (val & 0xFF);
     }
