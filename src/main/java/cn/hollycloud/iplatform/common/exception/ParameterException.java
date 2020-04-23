@@ -8,29 +8,24 @@ import lombok.Data;
  * Description:
  *
  * @author: Cloud
- * Date: 2018-08-23
- * Time: 10:38
+ * Date: 2020-04-23
+ * Time: 10:59
  */
 @Data
-public class ServiceFailException extends RuntimeException {
+public class ParameterException extends RuntimeException {
     private int status = Result.FAIL;
 
-    public ServiceFailException(String message) {
+    public ParameterException(String message) {
         super(message);
     }
 
-    public ServiceFailException(String message, int status) {
+    public ParameterException(String message, int status) {
         super(message);
         this.status = status;
     }
 
-    public ServiceFailException(BaseErrorCode errorCode) {
+    public ParameterException(BaseErrorCode errorCode) {
         this(errorCode.getDesc(), errorCode.getValue());
     }
 
-    public ServiceFailException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }
-
-
