@@ -132,6 +132,14 @@ public class HexUtils {
         return ((byte4 << 24) & 0xFF000000) | ((byte3 << 16) & 0xFF0000) | ((byte2 << 8) & 0xFF00) | (byte1 & 0xFF);
     }
 
+    public static long fourBytes2LongLE(byte[] buf, int pos) {
+        return ((buf[pos + 3] << 24) & 0xFF000000) | ((buf[pos + 2] << 16) & 0xFF0000) | ((buf[pos + 1] << 8) & 0xFF00) | (buf[pos] & 0xFF);
+    }
+
+    public static long fourBytes2Long(byte[] buf, int pos) {
+        return ((buf[pos] << 24) & 0xFF000000) | ((buf[pos + 1] << 16) & 0xFF0000) | ((buf[pos + 2] << 8) & 0xFF00) | (buf[pos + 3] & 0xFF);
+    }
+
     public static byte[] stringToAsc(String str) {
         try {
             return str.getBytes("UTF-8");

@@ -157,4 +157,56 @@ public class TreeUtils {
         }
         return tree;
     }
+
+    public static List<TreeBean> mountTree(List parentList, Class parentClass, List childList, Class childClass) {
+        Field[] fields = parentClass.getDeclaredFields();
+        String idName = null;
+        String parentIdName = null;
+        String displayName = null;
+        for (Field field : fields) {
+            if (field.getAnnotation(TreeId.class) != null) {
+                idName = field.getName();
+            } else if (field.getAnnotation(TreeName.class) != null) {
+                displayName = field.getName();
+            } else if (field.getAnnotation(TreeParentId.class) != null) {
+                parentIdName = field.getName();
+            }
+        }
+        if (StringUtils.isEmpty(idName)) {
+            throw new ServiceFailException("没有找到TreeId注解");
+        }
+        if (StringUtils.isEmpty(parentIdName)) {
+            throw new ServiceFailException("没有找到TreeParentId注解");
+        }
+        if (StringUtils.isEmpty(displayName)) {
+            throw new ServiceFailException("没有找到TreeName注解");
+        }
+
+        fields = parentClass.getDeclaredFields();
+        String childIdName = null;
+        String childParentIdName = null;
+        String childDisplayName = null;
+        for (Field field : fields) {
+            if (field.getAnnotation(TreeId.class) != null) {
+                childIdName = field.getName();
+            } else if (field.getAnnotation(TreeName.class) != null) {
+                childDisplayName = field.getName();
+            } else if (field.getAnnotation(TreeParentId.class) != null) {
+                childParentIdName = field.getName();
+            }
+        }
+        if (StringUtils.isEmpty(childIdName)) {
+            throw new ServiceFailException("没有找到子节点TreeId注解");
+        }
+        if (StringUtils.isEmpty(childParentIdName)) {
+            throw new ServiceFailException("没有找到子节点TreeParentId注解");
+        }
+        if (StringUtils.isEmpty(childDisplayName)) {
+            throw new ServiceFailException("没有找到子节点TreeName注解");
+        }
+        JSONArray jsonArray = JSONArray.parseArray(JsonUtils.serialize(parentList));
+        JSONArray childJsonArray = JSONArray.parseArray(JsonUtils.serialize(childList));
+        return mountTree(jsonArray, idName, parentIdName, displayName,
+                childJsonArray, childIdName, childParentIdName, childDisplayName);
+    }
 }
