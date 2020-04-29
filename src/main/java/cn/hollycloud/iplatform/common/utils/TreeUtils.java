@@ -5,6 +5,7 @@ import cn.hollycloud.iplatform.common.annotation.TreeName;
 import cn.hollycloud.iplatform.common.annotation.TreeParentId;
 import cn.hollycloud.iplatform.common.bean.TreeBean;
 import cn.hollycloud.iplatform.common.exception.ServiceFailException;
+import cn.hutool.core.util.ReflectUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
@@ -159,10 +160,11 @@ public class TreeUtils {
     }
 
     public static List<TreeBean> mountTree(List parentList, Class parentClass, List childList, Class childClass) {
-        Field[] fields = parentClass.getDeclaredFields();
+        Field[] fields = ReflectUtil.getFields(parentClass);
         String idName = null;
         String parentIdName = null;
         String displayName = null;
+
         for (Field field : fields) {
             if (field.getAnnotation(TreeId.class) != null) {
                 idName = field.getName();
@@ -182,7 +184,7 @@ public class TreeUtils {
             throw new ServiceFailException("没有找到TreeName注解");
         }
 
-        fields = parentClass.getDeclaredFields();
+        fields = ReflectUtil.getFields(childClass);
         String childIdName = null;
         String childParentIdName = null;
         String childDisplayName = null;
