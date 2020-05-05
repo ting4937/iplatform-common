@@ -36,7 +36,7 @@ public class TreeUtils {
     }
 
     public static List<TreeBean> parseTree(List list, Class clazz) {
-        Field[] fields = clazz.getDeclaredFields();
+        Field[] fields = ReflectUtil.getFields(clazz);
         String idName = null;
         String parentIdName = null;
         String displayName = null;
