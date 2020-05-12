@@ -211,4 +211,72 @@ public class TreeUtils {
         return mountTree(jsonArray, idName, parentIdName, displayName,
                 childJsonArray, childIdName, childParentIdName, childDisplayName);
     }
+
+    public static List parseStandardTree(List list, Class clazz) {
+        Field[] fields = clazz.getDeclaredFields();
+        String idName = null;
+        String parentIdName = null;
+        for (Field field : fields) {
+            if (field.getAnnotation(TreeId.class) != null) {
+                idName = field.getName();
+            } else if (field.getAnnotation(TreeParentId.class) != null) {
+                parentIdName = field.getName();
+            }
+        }
+        if (StringUtils.isEmpty(idName)) {
+            throw new ServiceFailException("没有找到TreeId注解");
+        }
+        if (StringUtils.isEmpty(parentIdName)) {
+            throw new ServiceFailException("没有找到TreeParentId注解");
+        }
+        JSONArray jsonArray = JSONArray.parseArray(JsonUtils.serialize(list));
+        return parseStandardTree(jsonArray, idName, parentIdName);
+    }
+
+    public static List parseStandardTree(JSONArray flatArray, String idName, String parentIdName) {
+        List tree = new ArrayList<>();
+        List<JSONObject> treeBeans = handleStandardTree(flatArray, idName, parentIdName);
+        for (JSONObject treeBean : treeBeans) {
+            if (treeBean.get(parentIdName) == null) {
+                tree.add(treeBean);
+            }
+        }
+        return tree;
+    }
+
+    private static List<JSONObject> handleStandardTree(JSONArray flatArray, String idName, String parentIdName) {
+        List<JSONObject> tree = new ArrayList<>();
+        Map<Object, JSONObject> map = new HashMap();
+        //把列表映射成id,obj形式
+        for (int i = 0; i < flatArray.size(); i++) {
+            JSONObject object = flatArray.getJSONObject(i);
+            object.put("isLeaf", true);
+            Object id = object.get(idName);
+            if (id == null) {
+                continue;
+            }
+
+            map.put(id, object);
+            tree.add(object);
+        }
+        //
+        for (int i = 0; i < tree.size(); i++) {
+            JSONObject object = tree.get(i);
+            Object parentId = object.get(parentIdName);
+            if (parentId != null) {
+                //父节点为null表示根节点
+                JSONObject parentNode = map.get(parentId);
+                if (parentNode != null) {
+                    JSONArray children = parentNode.getJSONArray("children");
+                    if (children == null) {
+                        children = new JSONArray();
+                        parentNode.put("children", children);
+                    }
+                    children.add(object);
+                    parentNode.put("isLeaf", false);
+                }
+            }
+        }
+        return tree;
+    }
 }
