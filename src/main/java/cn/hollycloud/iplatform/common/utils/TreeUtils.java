@@ -213,7 +213,7 @@ public class TreeUtils {
     }
 
     public static List parseStandardTree(List list, Class clazz) {
-        Field[] fields = clazz.getDeclaredFields();
+        Field[] fields = ReflectUtil.getFields(clazz);
         String idName = null;
         String parentIdName = null;
         for (Field field : fields) {

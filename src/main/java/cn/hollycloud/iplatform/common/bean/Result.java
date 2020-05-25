@@ -16,7 +16,7 @@ public class Result<T> {
     public final static int UNAUTHORIZED = 401;
     public final static int FORBIDDEN = 403;
 
-    @ApiModelProperty(value = "状态码,200表示成功, 401表示未登录, 403表示无权限", position = 0)
+    @ApiModelProperty(value = "状态码,200表示成功, 401表示未登录, 403表示无权限, 0表示通用错误", position = 0)
     private int status;
     @ApiModelProperty(value = "成功或错误消息", position = 1)
     private String message;
