@@ -69,7 +69,6 @@ public class JsonUtils {
         javaTimeModule.addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern(ValueConstant.DEFAULT_DATE_FORMAT)));
         javaTimeModule.addDeserializer(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern(ValueConstant.DEFAULT_TIME_FORMAT)));
         javaTimeModule.addDeserializer(Boolean.class, new BooleanDeserializer());
-        javaTimeModule.addDeserializer(Integer.class, new IntegerDeserializer());
         mapper.registerModule(javaTimeModule).registerModule(new ParameterNamesModule());
         mapper.setDateFormat(new SimpleDateFormat(ValueConstant.DEFAULT_DATE_TIME_FORMAT));
     }
@@ -125,26 +124,6 @@ public class JsonUtils {
             }
 
             throw ctxt.mappingException("Can't parse boolean value: " + jp.getText());
-        }
-    }
-
-    static class IntegerDeserializer extends JsonDeserializer<Integer> {
-        @Override
-        public Integer deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
-            JsonToken currentToken = jp.getCurrentToken();
-
-            if (currentToken.equals(JsonToken.VALUE_NUMBER_INT)) {
-                return jp.getIntValue();
-            } else if (currentToken.equals(JsonToken.VALUE_STRING)) {
-                if (StringUtils.isEmpty(jp.getText())) {
-                    return null;
-                }
-                return Integer.parseInt(jp.getText());
-            } else if (currentToken.equals(JsonToken.VALUE_NULL)) {
-                return null;
-            }
-
-            throw ctxt.mappingException("Can't parse int value: " + jp.getText());
         }
     }
 
