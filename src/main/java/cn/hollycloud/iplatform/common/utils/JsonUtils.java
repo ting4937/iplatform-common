@@ -93,7 +93,9 @@ public class JsonUtils {
 
             if (currentToken.equals(JsonToken.VALUE_STRING)) {
                 String text = jp.getText();
-
+                if (StringUtils.isEmpty(text)) {
+                    return null;
+                }
                 if ("Y".equalsIgnoreCase(text)) {
                     return Boolean.TRUE;
                 } else if ("N".equalsIgnoreCase(text)) {
@@ -106,8 +108,7 @@ public class JsonUtils {
                 throw ctxt.weirdStringException(text, Boolean.class,
                         "boolean值不正确");
             } else if (currentToken.equals(JsonToken.VALUE_NULL)) {
-                return Boolean.FALSE;
-                //return null
+                return null;
             } else if (currentToken.equals(JsonToken.VALUE_TRUE)) {
                 return Boolean.TRUE;
             } else if (currentToken.equals(JsonToken.VALUE_FALSE)) {
