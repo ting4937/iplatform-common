@@ -7,7 +7,7 @@
     <groupId>cn.hollycloud</groupId>
     <artifactId>iplatform-common</artifactId>
     <packaging>jar</packaging>
-    <version>1.3</version>
+    <version>1.4</version>
 
     <name>iplatform-common</name>
     <parent>
