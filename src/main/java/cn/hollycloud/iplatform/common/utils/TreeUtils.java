@@ -28,7 +28,7 @@ public class TreeUtils {
         List<TreeBean> tree = new ArrayList<>();
         List<TreeBean> treeBeans = handleTree(flatArray, idName, parentIdName, displayName);
         for (TreeBean treeBean : treeBeans) {
-            if (treeBean.getParentId() == null) {
+            if (treeBean.getParentId() == null || treeBean.getParentId().equals(0)) {
                 tree.add(treeBean);
             }
         }
@@ -123,7 +123,7 @@ public class TreeUtils {
         for (int i = 0; i < treeBeans.size(); i++) {
             TreeBean treeBean = treeBeans.get(i);
             treeBean.setIsLeaf(false);
-            if (treeBean.getParentId() == null) {
+            if (treeBean.getParentId() == null || treeBean.getParentId().equals(0)) {
                 tree.add(treeBean);
             }
             map.put(treeBean.getId(), treeBean);
